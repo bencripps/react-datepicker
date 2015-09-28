@@ -2,7 +2,7 @@
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:06:46
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 20:22:09
+* @Last Modified time: 2015-09-27 21:21:33
 */
 
 const Months = {
@@ -18,7 +18,7 @@ const Months = {
     9: 'October',
     10: 'November',
     11: 'December'
-}
+};
 
 const DateFormat = {
 

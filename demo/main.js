@@ -26178,7 +26178,7 @@ module.exports = exports['default'];
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:29:41
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 20:33:00
+* @Last Modified time: 2015-09-27 21:39:30
 */
 
 'use strict';
@@ -26210,23 +26210,46 @@ var Controls = _react2['default'].createClass({
 
     mixins: [_mixinsStyleBuilderJs2['default'], _reactorDispatcherJs2['default'].ReactMixin],
 
+    getDefaultProps: function getDefaultProps() {
+        return {
+            leftArrowStyles: {
+                display: _Styles2['default'].CONTROLS.ARROWS.DISPLAY,
+                fontSize: _Styles2['default'].CONTROLS.ARROWS.FONT_SIZE,
+                position: _Styles2['default'].CONTROLS.ARROWS.POSITION,
+                left: _Styles2['default'].CONTROLS.ARROWS.LEFT.LEFT,
+                iconGlyph: _Styles2['default'].CONTROLS.ARROWS.LEFT.ICON_GLYPH
+            },
+            rightArrowStyles: {
+                display: _Styles2['default'].CONTROLS.ARROWS.DISPLAY,
+                fontSize: _Styles2['default'].CONTROLS.ARROWS.FONT_SIZE,
+                position: _Styles2['default'].CONTROLS.ARROWS.POSITION,
+                right: _Styles2['default'].CONTROLS.ARROWS.RIGHT.RIGHT,
+                iconGlyph: _Styles2['default'].CONTROLS.ARROWS.RIGHT.ICON_GLYPH
+            },
+            arrowContainer: {
+                position: _Styles2['default'].CONTROLS.POSITION
+            }
+        };
+    },
+
     getDataBindings: function getDataBindings() {
         return {};
     },
 
     render: function render() {
+        console.log(this.props.leftArrowStyles.glyph);
         return _react2['default'].createElement(
             'div',
-            null,
+            { style: this.buildStyles('arrowContainer') },
             _react2['default'].createElement(
                 'div',
-                null,
-                'Right'
+                { style: this.buildStyles('leftArrowStyles') },
+                '//to do need to add icons'
             ),
             _react2['default'].createElement(
                 'div',
-                null,
-                'Left'
+                { style: this.buildStyles('rightArrowStyles') },
+                '//to do need to add icons'
             )
         );
     }
@@ -26313,21 +26336,33 @@ module.exports = exports['default'];
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:42:17
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 20:42:45
+* @Last Modified time: 2015-09-27 21:32:24
 */
 
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 var CONTROLS = {
-    LEFT_ARROW: {},
-    RIGHT_ARROW: {}
+    POSITION: 'relative',
+    ARROWS: {
+        FONT_SIZE: '12px',
+        DISPLAY: 'inline-block',
+        POSITION: 'absolute',
+        LEFT: {
+            LEFT: 10,
+            ICON_GLYPH: '<g><d="M627 160q0 -13 -10 -23l-50 -50q-10 -10 -23 -10t-23 10l-466 466q-10 10 -10 23t10 23l466 466q10 10 23 10t23 -10l50 -50q10 -10 10 -23t-10 -23l-393 -393l393 -393q10 -10 10 -23zM1011 160q0 -13 -10 -23l-50 -50q-10 -10 -23 -10t-23 10l-466 466q-10 10 -10 23 t10 23l466 466q10 10 23 10t23 -10l50 -50q10 -10 10 -23t-10 -23l-393 -393l393 -393q10 -10 10 -23z" /></g>'
+        },
+        RIGHT: {
+            RIGHT: 10,
+            ICON_GLYPH: '<g><d="M627 160q0 -13 -10 -23l-50 -50q-10 -10 -23 -10t-23 10l-466 466q-10 10 -10 23t10 23l466 466q10 10 23 10t23 -10l50 -50q10 -10 10 -23t-10 -23l-393 -393l393 -393q10 -10 10 -23zM1011 160q0 -13 -10 -23l-50 -50q-10 -10 -23 -10t-23 10l-466 466q-10 10 -10 23 t10 23l466 466q10 10 23 10t23 -10l50 -50q10 -10 10 -23t-10 -23l-393 -393l393 -393q10 -10 10 -23z" /></g>'
+        }
+    }
 };
 
-exports["default"] = CONTROLS;
-module.exports = exports["default"];
+exports['default'] = CONTROLS;
+module.exports = exports['default'];
 
 },{}],165:[function(require,module,exports){
 /* 
@@ -26498,7 +26533,7 @@ module.exports = exports['default'];
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:06:46
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 20:22:09
+* @Last Modified time: 2015-09-27 21:21:33
 */
 
 'use strict';

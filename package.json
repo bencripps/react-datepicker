@@ -1,0 +1,44 @@
+{
+  "name": "react_datepicker",
+  "version": "1.0.0",
+  "description": "a native react datepicker built with jsx",
+  "main": "index.js",
+  "scripts": {
+    "build-js": "browserify demo/built/runner.jsx -t babelify --outfile demo/main.js",
+    "watch-js": "watchify demo/built/runner.jsx -t babelify --outfile demo/main.js",
+    "build-styles": "sass src/sass/main.scss demo/css/main.css",
+    "watch-styles": "sass --watch src/sass/main.scss:demo/css/main.css",
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bencripps/react-datepicker.git"
+  },
+  "keywords": [
+    "react",
+    "es6",
+    "jsx",
+    "datepicker"
+  ],
+  "author": "benjamin cripps",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bencripps/react-datepicker/issues"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^9.0.3",
+    "jasmine": "^2.3.2",
+    "jasmine-core": "^2.3.4",
+    "karma": "~0.12.31",
+    "karma-browserify": "~3.0.2",
+    "karma-jasmine": "~0.3.5",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "watchify": "latest"
+  },
+  "dependencies": {
+    "nuclear-js": "^1.1.1",
+    "react": "^0.13.3"
+  },
+  "homepage": "https://github.com/bencripps/react-datepicker#readme"
+}

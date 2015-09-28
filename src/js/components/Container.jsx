@@ -11,6 +11,7 @@ import StyleBuilder from '../mixins/StyleBuilder.js';
 import Dismisser from '../mixins/Dismisser.js';
 import DateFormat from '../mixins/DateFormat.js';
 import Controls from './Controls.js';
+import Calendar from './Calendar.jsx';
 
 const Container = React.createClass({
 
@@ -42,14 +43,20 @@ const Container = React.createClass({
         );
     },
 
+    getTitleTemplate() {
+        return `${this.getMonth(this.props.currentDate)} ${this.getYear(this.props.currentDate)}`;
+    },
+
     getContainer() {
         
-        return (<div style={this.buildStyles('containerStyle')} className={this.props.containerClassname}>
-                    <h2 style={this.buildStyles('titleStyle')}>
-                        {this.getMonth(this.props.currentDate)}
-                    </h2>
-                    <Controls {...this.props} />
-                </div>
+        return (
+            <div style={this.buildStyles('containerStyle')} className={this.props.containerClassname}>
+                <h2 style={this.buildStyles('titleStyle')}>
+                    {this.getTitleTemplate()}
+                </h2>
+                <Controls {...this.props} />
+                <Calendar {...this.props} />
+            </div>
         );
     }   
 

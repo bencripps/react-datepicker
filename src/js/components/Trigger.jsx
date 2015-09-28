@@ -12,6 +12,8 @@ import StyleBuilder from '../mixins/StyleBuilder.js';
 import Dismisser from '../mixins/Dismisser.js';
 import reactor from '../reactor/Dispatcher.js';
 import isPickerShownGetter from '../reactor/getters/isPickerShown.js';
+import selectedDateGetter from '../reactor/getters/selectedDate.js';
+import currentDateGetter from '../reactor/getters/currentDate.js';
 
 const Trigger = React.createClass({
 
@@ -19,7 +21,9 @@ const Trigger = React.createClass({
 
     getDataBindings() {
         return {
-            isPickerShown: isPickerShownGetter
+            isPickerShown: isPickerShownGetter,
+            currentDate: currentDateGetter,
+            selectedDate: selectedDateGetter
         };
     },
 
@@ -44,6 +48,7 @@ const Trigger = React.createClass({
 
     resetContainer() {
         reactor.dispatch('UPDATE_PICKER_VISIBILITY', !this.state.isPickerShown);
+        reactor.dispatch('UPDATE_CURRENT_DATE', this.state.selectedDate);
     },
 
     render() {
@@ -52,7 +57,7 @@ const Trigger = React.createClass({
                 <input 
                     className={this.props.triggerClassname} 
                     type='text' 
-                    value={this.props.currentDate} 
+                    value={this.state.selectedDate} 
                     style={this.buildStyles('triggerStyle')} 
                     onClick={this.resetContainer} />
                 <Container {...this.state} {...this.props}/>

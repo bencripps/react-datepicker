@@ -2,7 +2,7 @@
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:06:46
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 21:21:33
+* @Last Modified time: 2015-09-28 16:44:15
 */
 
 const Months = {
@@ -25,6 +25,22 @@ const DateFormat = {
     getMonth(date) {
         var d = this.getDate(date);
         return Months[d.getMonth()];
+    },
+
+    getYear(date) {
+        var d = this.getDate(date);
+        return d.getFullYear();
+    },
+
+    advanceMonth(date) {
+        var d = this.getDate(date);
+        
+        return new Date(d).setMonth(d.getMonth() + 1);
+    },
+
+    decrementMonth(date) {
+        var d = this.getDate(date);
+        return new Date(d).setMonth(d.getMonth() + 1);
     },
 
     getDate(date) {

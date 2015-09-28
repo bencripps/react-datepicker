@@ -10,8 +10,6 @@ import Trigger from './components/Trigger.jsx';
 import reactor from './reactor/Dispatcher.js';
 
 const DISMISS_ON_CLOSE = true;
-const DATE_FORMAT = 'toDateString';
-const CURRENT_DATE = new Date()[DATE_FORMAT]();
 const PREFIX = 'react-datepicker-';
 const TRIGGER_CLASSNAME = PREFIX + 'trigger';
 const CONTAINER_CLASSNAME = PREFIX + 'container';
@@ -28,7 +26,6 @@ const DatePicker = React.createClass({
     getDefaultProps() {
         return {
             dismissOnClose: DISMISS_ON_CLOSE,
-            currentDate: CURRENT_DATE,
             triggerClassname: TRIGGER_CLASSNAME,
             containerClassname: CONTAINER_CLASSNAME
         };

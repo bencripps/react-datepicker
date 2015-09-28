@@ -26051,8 +26051,6 @@ var _reactorDispatcherJs = require('./reactor/Dispatcher.js');
 var _reactorDispatcherJs2 = _interopRequireDefault(_reactorDispatcherJs);
 
 var DISMISS_ON_CLOSE = true;
-var DATE_FORMAT = 'toDateString';
-var CURRENT_DATE = new Date()[DATE_FORMAT]();
 var PREFIX = 'react-datepicker-';
 var TRIGGER_CLASSNAME = PREFIX + 'trigger';
 var CONTAINER_CLASSNAME = PREFIX + 'container';
@@ -26070,7 +26068,6 @@ var DatePicker = _react2['default'].createClass({
     getDefaultProps: function getDefaultProps() {
         return {
             dismissOnClose: DISMISS_ON_CLOSE,
-            currentDate: CURRENT_DATE,
             triggerClassname: TRIGGER_CLASSNAME,
             containerClassname: CONTAINER_CLASSNAME
         };
@@ -26085,7 +26082,68 @@ var DatePicker = _react2['default'].createClass({
 exports['default'] = DatePicker;
 module.exports = exports['default'];
 
-},{"./components/Trigger.jsx":168,"./reactor/Dispatcher.js":172,"react":157}],160:[function(require,module,exports){
+},{"./components/Trigger.jsx":172,"./reactor/Dispatcher.js":176,"react":157}],160:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-26 16:41:28
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-26 16:53:04
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Styles = require('./Styles');
+
+var _Styles2 = _interopRequireDefault(_Styles);
+
+var _mixinsStyleBuilderJs = require('../mixins/StyleBuilder.js');
+
+var _mixinsStyleBuilderJs2 = _interopRequireDefault(_mixinsStyleBuilderJs);
+
+var _mixinsDateFormatJs = require('../mixins/DateFormat.js');
+
+var _mixinsDateFormatJs2 = _interopRequireDefault(_mixinsDateFormatJs);
+
+var Calendar = _react2['default'].createClass({
+    displayName: 'Calendar',
+
+    mixins: [_mixinsStyleBuilderJs2['default'], _mixinsDateFormatJs2['default']],
+
+    getDefaultProps: function getDefaultProps() {
+        return {
+            calendarContainerStyle: {
+                border: _Styles2['default'].CALENDAR.CONTAINER.BORDER,
+                height: _Styles2['default'].CALENDAR.CONTAINER.HEIGHT,
+                width: _Styles2['default'].CALENDAR.CONTAINER.WIDTH,
+                margin: _Styles2['default'].CALENDAR.CONTAINER.MARGIN,
+                marginTop: _Styles2['default'].CALENDAR.CONTAINER.MARGIN_TOP
+            }
+        };
+    },
+
+    render: function render() {
+        return _react2['default'].createElement(
+            'div',
+            { style: this.buildStyles('calendarContainerStyle') },
+            'Hi'
+        );
+    }
+});
+
+exports['default'] = Calendar;
+module.exports = exports['default'];
+
+},{"../mixins/DateFormat.js":173,"../mixins/StyleBuilder.js":175,"./Styles":164,"react":157}],161:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:41:28
@@ -26125,6 +26183,10 @@ var _ControlsJs = require('./Controls.js');
 
 var _ControlsJs2 = _interopRequireDefault(_ControlsJs);
 
+var _CalendarJsx = require('./Calendar.jsx');
+
+var _CalendarJsx2 = _interopRequireDefault(_CalendarJsx);
+
 var Container = _react2['default'].createClass({
     displayName: 'Container',
 
@@ -26154,6 +26216,10 @@ var Container = _react2['default'].createClass({
         return component;
     },
 
+    getTitleTemplate: function getTitleTemplate() {
+        return this.getMonth(this.props.currentDate) + ' ' + this.getYear(this.props.currentDate);
+    },
+
     getContainer: function getContainer() {
 
         return _react2['default'].createElement(
@@ -26162,9 +26228,10 @@ var Container = _react2['default'].createClass({
             _react2['default'].createElement(
                 'h2',
                 { style: this.buildStyles('titleStyle') },
-                this.getMonth(this.props.currentDate)
+                this.getTitleTemplate()
             ),
-            _react2['default'].createElement(_ControlsJs2['default'], this.props)
+            _react2['default'].createElement(_ControlsJs2['default'], this.props),
+            _react2['default'].createElement(_CalendarJsx2['default'], this.props)
         );
     }
 
@@ -26173,12 +26240,12 @@ var Container = _react2['default'].createClass({
 exports['default'] = Container;
 module.exports = exports['default'];
 
-},{"../mixins/DateFormat.js":169,"../mixins/Dismisser.js":170,"../mixins/StyleBuilder.js":171,"./Controls.js":161,"./Styles":162,"react":157}],161:[function(require,module,exports){
+},{"../mixins/DateFormat.js":173,"../mixins/Dismisser.js":174,"../mixins/StyleBuilder.js":175,"./Calendar.jsx":160,"./Controls.js":162,"./Styles":164,"react":157}],162:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:29:41
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 21:39:30
+* @Last Modified time: 2015-09-28 17:25:19
 */
 
 'use strict';
@@ -26205,10 +26272,22 @@ var _reactorDispatcherJs = require('../reactor/Dispatcher.js');
 
 var _reactorDispatcherJs2 = _interopRequireDefault(_reactorDispatcherJs);
 
+var _IconJsx = require('./Icon.jsx');
+
+var _IconJsx2 = _interopRequireDefault(_IconJsx);
+
+var _mixinsDateFormatJs = require('../mixins/DateFormat.js');
+
+var _mixinsDateFormatJs2 = _interopRequireDefault(_mixinsDateFormatJs);
+
+var _reactorGettersCurrentDateJs = require('../reactor/getters/currentDate.js');
+
+var _reactorGettersCurrentDateJs2 = _interopRequireDefault(_reactorGettersCurrentDateJs);
+
 var Controls = _react2['default'].createClass({
     displayName: 'Controls',
 
-    mixins: [_mixinsStyleBuilderJs2['default'], _reactorDispatcherJs2['default'].ReactMixin],
+    mixins: [_mixinsStyleBuilderJs2['default'], _mixinsDateFormatJs2['default'], _reactorDispatcherJs2['default'].ReactMixin],
 
     getDefaultProps: function getDefaultProps() {
         return {
@@ -26216,40 +26295,46 @@ var Controls = _react2['default'].createClass({
                 display: _Styles2['default'].CONTROLS.ARROWS.DISPLAY,
                 fontSize: _Styles2['default'].CONTROLS.ARROWS.FONT_SIZE,
                 position: _Styles2['default'].CONTROLS.ARROWS.POSITION,
-                left: _Styles2['default'].CONTROLS.ARROWS.LEFT.LEFT,
-                iconGlyph: _Styles2['default'].CONTROLS.ARROWS.LEFT.ICON_GLYPH
+                left: _Styles2['default'].CONTROLS.ARROWS.LEFT.LEFT
             },
             rightArrowStyles: {
                 display: _Styles2['default'].CONTROLS.ARROWS.DISPLAY,
                 fontSize: _Styles2['default'].CONTROLS.ARROWS.FONT_SIZE,
                 position: _Styles2['default'].CONTROLS.ARROWS.POSITION,
-                right: _Styles2['default'].CONTROLS.ARROWS.RIGHT.RIGHT,
-                iconGlyph: _Styles2['default'].CONTROLS.ARROWS.RIGHT.ICON_GLYPH
+                right: _Styles2['default'].CONTROLS.ARROWS.RIGHT.RIGHT
             },
             arrowContainer: {
-                position: _Styles2['default'].CONTROLS.POSITION
+                position: _Styles2['default'].CONTROLS.POSITION,
+                height: _Styles2['default'].CONTROLS.HEIGHT
             }
         };
     },
 
     getDataBindings: function getDataBindings() {
-        return {};
+        return {
+            currentDate: _reactorGettersCurrentDateJs2['default']
+        };
+    },
+
+    handleClick: function handleClick(direction, mouseE) {
+        var newDate = direction === 'right' ? this.advanceMonth(this.state.currentDate) : this.decrementMonth(this.state.currentDate);
+
+        _reactorDispatcherJs2['default'].dispatch('UPDATE_CURRENT_DATE', newDate);
     },
 
     render: function render() {
-        console.log(this.props.leftArrowStyles.glyph);
         return _react2['default'].createElement(
             'div',
             { style: this.buildStyles('arrowContainer') },
             _react2['default'].createElement(
                 'div',
-                { style: this.buildStyles('leftArrowStyles') },
-                '//to do need to add icons'
+                { style: this.buildStyles('leftArrowStyles'), onClick: this.handleClick.bind(this, 'left') },
+                _react2['default'].createElement(_IconJsx2['default'], { type: 'LEFT_ARROW' })
             ),
             _react2['default'].createElement(
                 'div',
-                { style: this.buildStyles('rightArrowStyles') },
-                '//to do need to add icons'
+                { style: this.buildStyles('rightArrowStyles'), onClick: this.handleClick.bind(this, 'right') },
+                _react2['default'].createElement(_IconJsx2['default'], { type: 'RIGHT_ARROW' })
             )
         );
     }
@@ -26259,12 +26344,70 @@ var Controls = _react2['default'].createClass({
 exports['default'] = Controls;
 module.exports = exports['default'];
 
-},{"../mixins/StyleBuilder.js":171,"../reactor/Dispatcher.js":172,"./Styles":162,"react":157}],162:[function(require,module,exports){
+},{"../mixins/DateFormat.js":173,"../mixins/StyleBuilder.js":175,"../reactor/Dispatcher.js":176,"../reactor/getters/currentDate.js":177,"./Icon.jsx":163,"./Styles":164,"react":157}],163:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-26 16:41:28
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-26 16:53:04
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Styles = require('./Styles');
+
+var _Styles2 = _interopRequireDefault(_Styles);
+
+var _mixinsStyleBuilderJs = require('../mixins/StyleBuilder.js');
+
+var _mixinsStyleBuilderJs2 = _interopRequireDefault(_mixinsStyleBuilderJs);
+
+var Icon = _react2['default'].createClass({
+    displayName: 'Icon',
+
+    mixins: [_mixinsStyleBuilderJs2['default']],
+
+    getDefaultProps: function getDefaultProps() {
+        return {
+            iconStyle: {
+                fill: _Styles2['default'].ICON.FILL,
+                verticalAlign: _Styles2['default'].ICON.VERTICAL_ALIGN,
+                width: _Styles2['default'].ICON.WIDTH,
+                height: _Styles2['default'].ICON.HEIGHT,
+                fontSize: _Styles2['default'].ICON.FONT_SIZE
+            }
+        };
+    },
+
+    types: {
+        LEFT_ARROW: 'fa fa-angle-double-left',
+        RIGHT_ARROW: 'fa fa-angle-double-right'
+    },
+
+    render: function render() {
+        return _react2['default'].createElement('i', { style: this.buildStyles('iconStyle'), className: this.types[this.props.type] });
+    }
+});
+
+exports['default'] = Icon;
+module.exports = exports['default'];
+
+},{"../mixins/StyleBuilder.js":175,"./Styles":164,"react":157}],164:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:50:26
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 20:42:21
+* @Last Modified time: 2015-09-28 17:26:50
 */
 
 'use strict';
@@ -26295,18 +26438,55 @@ var _StylesControlsJs = require('./Styles/Controls.js');
 
 var _StylesControlsJs2 = _interopRequireDefault(_StylesControlsJs);
 
+var _StylesIconJs = require('./Styles/Icon.js');
+
+var _StylesIconJs2 = _interopRequireDefault(_StylesIconJs);
+
+var _StylesCalendarJs = require('./Styles/Calendar.js');
+
+var _StylesCalendarJs2 = _interopRequireDefault(_StylesCalendarJs);
+
 var Styles = {
     GENERAL: _StylesGeneralJs2['default'],
     INPUT: _StylesInputJs2['default'],
     CONTAINER: _StylesContainerJs2['default'],
     TITLE: _StylesTitleJs2['default'],
-    CONTROLS: _StylesControlsJs2['default']
+    CONTROLS: _StylesControlsJs2['default'],
+    ICON: _StylesIconJs2['default'],
+    CALENDAR: _StylesCalendarJs2['default']
 };
 
 exports['default'] = Styles;
 module.exports = exports['default'];
 
-},{"./Styles/Container.js":163,"./Styles/Controls.js":164,"./Styles/General.js":165,"./Styles/Input.js":166,"./Styles/Title.js":167}],163:[function(require,module,exports){
+},{"./Styles/Calendar.js":165,"./Styles/Container.js":166,"./Styles/Controls.js":167,"./Styles/General.js":168,"./Styles/Icon.js":169,"./Styles/Input.js":170,"./Styles/Title.js":171}],165:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-28 17:26:14
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-28 17:40:02
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+var CALENDAR = {
+    CONTAINER: {
+
+        BORDER: '1px solid black',
+        HEIGHT: '70%',
+        WIDTH: '70%',
+        MARGIN: '0px auto',
+        MARGIN_TOP: '20px'
+    }
+};
+
+exports['default'] = CALENDAR;
+module.exports = exports['default'];
+
+},{}],166:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:38:44
@@ -26331,12 +26511,12 @@ var CONTAINER = {
 exports['default'] = CONTAINER;
 module.exports = exports['default'];
 
-},{}],164:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:42:17
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 21:32:24
+* @Last Modified time: 2015-09-28 17:25:35
 */
 
 'use strict';
@@ -26346,17 +26526,16 @@ Object.defineProperty(exports, '__esModule', {
 });
 var CONTROLS = {
     POSITION: 'relative',
+    HEIGHT: '15px',
     ARROWS: {
         FONT_SIZE: '12px',
         DISPLAY: 'inline-block',
         POSITION: 'absolute',
         LEFT: {
-            LEFT: 10,
-            ICON_GLYPH: '<g><d="M627 160q0 -13 -10 -23l-50 -50q-10 -10 -23 -10t-23 10l-466 466q-10 10 -10 23t10 23l466 466q10 10 23 10t23 -10l50 -50q10 -10 10 -23t-10 -23l-393 -393l393 -393q10 -10 10 -23zM1011 160q0 -13 -10 -23l-50 -50q-10 -10 -23 -10t-23 10l-466 466q-10 10 -10 23 t10 23l466 466q10 10 23 10t23 -10l50 -50q10 -10 10 -23t-10 -23l-393 -393l393 -393q10 -10 10 -23z" /></g>'
+            LEFT: 10
         },
         RIGHT: {
-            RIGHT: 10,
-            ICON_GLYPH: '<g><d="M627 160q0 -13 -10 -23l-50 -50q-10 -10 -23 -10t-23 10l-466 466q-10 10 -10 23t10 23l466 466q10 10 23 10t23 -10l50 -50q10 -10 10 -23t-10 -23l-393 -393l393 -393q10 -10 10 -23zM1011 160q0 -13 -10 -23l-50 -50q-10 -10 -23 -10t-23 10l-466 466q-10 10 -10 23 t10 23l466 466q10 10 23 10t23 -10l50 -50q10 -10 10 -23t-10 -23l-393 -393l393 -393q10 -10 10 -23z" /></g>'
+            RIGHT: 10
         }
     }
 };
@@ -26364,7 +26543,7 @@ var CONTROLS = {
 exports['default'] = CONTROLS;
 module.exports = exports['default'];
 
-},{}],165:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:36:05
@@ -26385,7 +26564,31 @@ var GENERAL = {
 exports['default'] = GENERAL;
 module.exports = exports['default'];
 
-},{}],166:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-28 11:48:27
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-28 16:13:01
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+   value: true
+});
+var ICON = {
+   FILL: 'currentcolor',
+   VERTICAL_ALIGN: 'middle',
+   WIDTH: '30px',
+   HEIGHT: '30px',
+   FONT_SIZE: '18px'
+};
+
+exports['default'] = ICON;
+module.exports = exports['default'];
+
+},{}],170:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:37:46
@@ -26408,7 +26611,7 @@ var INPUT = {
 exports['default'] = INPUT;
 module.exports = exports['default'];
 
-},{}],167:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:40:08
@@ -26428,7 +26631,7 @@ var TITLE = {
 exports['default'] = TITLE;
 module.exports = exports['default'];
 
-},{}],168:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:41:28
@@ -26474,6 +26677,14 @@ var _reactorGettersIsPickerShownJs = require('../reactor/getters/isPickerShown.j
 
 var _reactorGettersIsPickerShownJs2 = _interopRequireDefault(_reactorGettersIsPickerShownJs);
 
+var _reactorGettersSelectedDateJs = require('../reactor/getters/selectedDate.js');
+
+var _reactorGettersSelectedDateJs2 = _interopRequireDefault(_reactorGettersSelectedDateJs);
+
+var _reactorGettersCurrentDateJs = require('../reactor/getters/currentDate.js');
+
+var _reactorGettersCurrentDateJs2 = _interopRequireDefault(_reactorGettersCurrentDateJs);
+
 var Trigger = _react2['default'].createClass({
     displayName: 'Trigger',
 
@@ -26481,7 +26692,9 @@ var Trigger = _react2['default'].createClass({
 
     getDataBindings: function getDataBindings() {
         return {
-            isPickerShown: _reactorGettersIsPickerShownJs2['default']
+            isPickerShown: _reactorGettersIsPickerShownJs2['default'],
+            currentDate: _reactorGettersCurrentDateJs2['default'],
+            selectedDate: _reactorGettersSelectedDateJs2['default']
         };
     },
 
@@ -26508,6 +26721,7 @@ var Trigger = _react2['default'].createClass({
 
     resetContainer: function resetContainer() {
         _reactorDispatcherJs2['default'].dispatch('UPDATE_PICKER_VISIBILITY', !this.state.isPickerShown);
+        _reactorDispatcherJs2['default'].dispatch('UPDATE_CURRENT_DATE', this.state.selectedDate);
     },
 
     render: function render() {
@@ -26517,7 +26731,7 @@ var Trigger = _react2['default'].createClass({
             _react2['default'].createElement('input', {
                 className: this.props.triggerClassname,
                 type: 'text',
-                value: this.props.currentDate,
+                value: this.state.selectedDate,
                 style: this.buildStyles('triggerStyle'),
                 onClick: this.resetContainer }),
             _react2['default'].createElement(_ContainerJsx2['default'], _extends({}, this.state, this.props))
@@ -26528,12 +26742,12 @@ var Trigger = _react2['default'].createClass({
 exports['default'] = Trigger;
 module.exports = exports['default'];
 
-},{"../mixins/Dismisser.js":170,"../mixins/StyleBuilder.js":171,"../reactor/Dispatcher.js":172,"../reactor/getters/isPickerShown.js":173,"./Container.jsx":160,"./Styles":162,"react":157}],169:[function(require,module,exports){
+},{"../mixins/Dismisser.js":174,"../mixins/StyleBuilder.js":175,"../reactor/Dispatcher.js":176,"../reactor/getters/currentDate.js":177,"../reactor/getters/isPickerShown.js":178,"../reactor/getters/selectedDate.js":179,"./Container.jsx":161,"./Styles":164,"react":157}],173:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:06:46
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 21:21:33
+* @Last Modified time: 2015-09-28 16:44:15
 */
 
 'use strict';
@@ -26563,6 +26777,22 @@ var DateFormat = {
         return Months[d.getMonth()];
     },
 
+    getYear: function getYear(date) {
+        var d = this.getDate(date);
+        return d.getFullYear();
+    },
+
+    advanceMonth: function advanceMonth(date) {
+        var d = this.getDate(date);
+
+        return new Date(d).setMonth(d.getMonth() + 1);
+    },
+
+    decrementMonth: function decrementMonth(date) {
+        var d = this.getDate(date);
+        return new Date(d).setMonth(d.getMonth() + 1);
+    },
+
     getDate: function getDate(date) {
         return new Date(date);
     }
@@ -26572,7 +26802,7 @@ var DateFormat = {
 exports['default'] = DateFormat;
 module.exports = exports['default'];
 
-},{}],170:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 11:29:49
@@ -26604,7 +26834,7 @@ var Dismisser = {
 exports["default"] = Dismisser;
 module.exports = exports["default"];
 
-},{}],171:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:55:50
@@ -26628,12 +26858,12 @@ var StyleBuilder = {
 exports["default"] = StyleBuilder;
 module.exports = exports["default"];
 
-},{}],172:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 13:47:14
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 19:29:09
+* @Last Modified time: 2015-09-28 16:39:08
 */
 
 'use strict';
@@ -26654,17 +26884,42 @@ var _storesCurrentDateJs = require('./stores/currentDate.js');
 
 var _storesCurrentDateJs2 = _interopRequireDefault(_storesCurrentDateJs);
 
+var _storesSelectedDateJs = require('./stores/selectedDate.js');
+
+var _storesSelectedDateJs2 = _interopRequireDefault(_storesSelectedDateJs);
+
 var reactor = new _nuclearJs.Reactor({ debug: true });
 
 reactor.registerStores({
     isPickerShown: _storesIsPickerShownJs2['default'],
-    currentDate: _storesCurrentDateJs2['default']
+    currentDate: _storesCurrentDateJs2['default'],
+    selectedDate: _storesSelectedDateJs2['default']
 });
 
 exports['default'] = reactor;
 module.exports = exports['default'];
 
-},{"./stores/currentDate.js":174,"./stores/isPickerShown.js":175,"nuclear-js":2}],173:[function(require,module,exports){
+},{"./stores/currentDate.js":180,"./stores/isPickerShown.js":181,"./stores/selectedDate.js":182,"nuclear-js":2}],177:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-27 19:27:27
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-28 16:33:11
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var currentDateGetter = [['currentDate'], function (currentDate) {
+  return new Date(currentDate).toDateString();
+}];
+
+exports['default'] = currentDateGetter;
+module.exports = exports['default'];
+
+},{}],178:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 19:19:32
@@ -26684,7 +26939,27 @@ var isPickerShownGetter = [['isPickerShown'], function (isPickerShown) {
 exports['default'] = isPickerShownGetter;
 module.exports = exports['default'];
 
-},{}],174:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-28 16:37:56
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-28 16:47:35
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var selectedDateGetter = [['selectedDate'], function (selectedDate) {
+  return new Date(selectedDate).toDateString();
+}];
+
+exports['default'] = selectedDateGetter;
+module.exports = exports['default'];
+
+},{}],180:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 19:26:39
@@ -26718,7 +26993,7 @@ var currentDateStore = (0, _nuclearJs.Store)({
 exports['default'] = currentDateStore;
 module.exports = exports['default'];
 
-},{"nuclear-js":2}],175:[function(require,module,exports){
+},{"nuclear-js":2}],181:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 19:20:26
@@ -26749,6 +27024,40 @@ var isPickerShownStore = (0, _nuclearJs.Store)({
 });
 
 exports['default'] = isPickerShownStore;
+module.exports = exports['default'];
+
+},{"nuclear-js":2}],182:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-27 19:26:39
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-27 20:03:17
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _nuclearJs = require('nuclear-js');
+
+var selectedDateStore = (0, _nuclearJs.Store)({
+
+    getInitialState: function getInitialState() {
+        var date = new Date().toDateString();
+        return (0, _nuclearJs.toImmutable)(date);
+    },
+
+    initialize: function initialize() {
+        this.on('UPDATE_SELECTED_DATE', function (state, type) {
+            return type;
+        });
+    }
+
+});
+
+exports['default'] = selectedDateStore;
 module.exports = exports['default'];
 
 },{"nuclear-js":2}]},{},[1]);

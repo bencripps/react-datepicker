@@ -11,6 +11,7 @@ import Styles from './Styles';
 import DateFormat from '../mixins/DateFormat.js';
 import StyleBuilder from '../mixins/StyleBuilder.js';
 import selectedDateGetter from '../reactor/getters/selectedDate.js';
+import isPickerShownGetter from '../reactor/getters/isPickerShown.js';
 
 const Day = React.createClass({
 
@@ -18,7 +19,8 @@ const Day = React.createClass({
 
     getDataBindings() {
         return {
-            selectedDate: selectedDateGetter
+            selectedDate: selectedDateGetter,
+            isPickerShown: isPickerShownGetter
         };
     },
 
@@ -52,6 +54,10 @@ const Day = React.createClass({
     handleClick(date, e) {
         var newDate = this.getDateFromDay(this.props.currentDate, date);
         reactor.dispatch('UPDATE_SELECTED_DATE', newDate);
+
+        if (this.props.dismissOnSelection) {
+            reactor.dispatch('UPDATE_PICKER_VISIBILITY', false);
+        }
     },
 
     render() {

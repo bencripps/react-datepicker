@@ -9,7 +9,7 @@ import React from 'react';
 import Trigger from './components/Trigger.jsx';
 import reactor from './reactor/Dispatcher.js';
 
-const DISMISS_ON_CLOSE = true;
+const DISMISS_ON_SELECTION = true;
 const PREFIX = 'react-datepicker-';
 const TRIGGER_CLASSNAME = PREFIX + 'trigger';
 const CONTAINER_CLASSNAME = PREFIX + 'container';
@@ -17,7 +17,7 @@ const CONTAINER_CLASSNAME = PREFIX + 'container';
 const DatePicker = React.createClass({
 
     propTypes: {
-        dismissOnClose: React.PropTypes.bool,
+        dismissOnSelection: React.PropTypes.bool,
         startDate: React.PropTypes.func,
         triggerClassname: React.PropTypes.string,
         containerClassname: React.PropTypes.string
@@ -25,7 +25,7 @@ const DatePicker = React.createClass({
 
     getDefaultProps() {
         return {
-            dismissOnClose: DISMISS_ON_CLOSE,
+            dismissOnSelection: DISMISS_ON_SELECTION,
             triggerClassname: TRIGGER_CLASSNAME,
             containerClassname: CONTAINER_CLASSNAME
         };

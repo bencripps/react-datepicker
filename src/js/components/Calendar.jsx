@@ -29,11 +29,7 @@ const Calendar = React.createClass({
     },
 
     getDays() {
-        var days = this.getDaysFromDate(this.props.currentDate).map((day) => <Day data={day} currentDate={this.props.currentDate} />);
-
-        return(
-            {days}
-        );
+        return this.getDaysFromDate(this.props.currentDate).map((day) => <Day data={day} currentDate={this.props.currentDate} dismissOnSelection={this.props.dismissOnSelection} />);
     },
 
     render() {

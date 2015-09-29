@@ -9,7 +9,7 @@ import React from 'react';
 import DatePicker from '../../src/js/DatePicker.jsx';
 
 let options = {
-    dismissOnClose: false
+    dismissOnSelection: false
 }
 
 document.addEventListener('DOMContentLoaded', function() {

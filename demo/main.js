@@ -19,7 +19,7 @@ var _srcJsDatePickerJsx = require('../../src/js/DatePicker.jsx');
 var _srcJsDatePickerJsx2 = _interopRequireDefault(_srcJsDatePickerJsx);
 
 var options = {
-    dismissOnClose: false
+    dismissOnSelection: false
 };
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -26050,7 +26050,7 @@ var _reactorDispatcherJs = require('./reactor/Dispatcher.js');
 
 var _reactorDispatcherJs2 = _interopRequireDefault(_reactorDispatcherJs);
 
-var DISMISS_ON_CLOSE = true;
+var DISMISS_ON_SELECTION = true;
 var PREFIX = 'react-datepicker-';
 var TRIGGER_CLASSNAME = PREFIX + 'trigger';
 var CONTAINER_CLASSNAME = PREFIX + 'container';
@@ -26059,7 +26059,7 @@ var DatePicker = _react2['default'].createClass({
     displayName: 'DatePicker',
 
     propTypes: {
-        dismissOnClose: _react2['default'].PropTypes.bool,
+        dismissOnSelection: _react2['default'].PropTypes.bool,
         startDate: _react2['default'].PropTypes.func,
         triggerClassname: _react2['default'].PropTypes.string,
         containerClassname: _react2['default'].PropTypes.string
@@ -26067,7 +26067,7 @@ var DatePicker = _react2['default'].createClass({
 
     getDefaultProps: function getDefaultProps() {
         return {
-            dismissOnClose: DISMISS_ON_CLOSE,
+            dismissOnSelection: DISMISS_ON_SELECTION,
             triggerClassname: TRIGGER_CLASSNAME,
             containerClassname: CONTAINER_CLASSNAME
         };
@@ -26139,11 +26139,9 @@ var Calendar = _react2['default'].createClass({
     getDays: function getDays() {
         var _this = this;
 
-        var days = this.getDaysFromDate(this.props.currentDate).map(function (day) {
-            return _react2['default'].createElement(_DayJsx2['default'], { data: day, currentDate: _this.props.currentDate });
+        return this.getDaysFromDate(this.props.currentDate).map(function (day) {
+            return _react2['default'].createElement(_DayJsx2['default'], { data: day, currentDate: _this.props.currentDate, dismissOnSelection: _this.props.dismissOnSelection });
         });
-
-        return { days: days };
     },
 
     render: function render() {
@@ -26399,6 +26397,10 @@ var _reactorGettersSelectedDateJs = require('../reactor/getters/selectedDate.js'
 
 var _reactorGettersSelectedDateJs2 = _interopRequireDefault(_reactorGettersSelectedDateJs);
 
+var _reactorGettersIsPickerShownJs = require('../reactor/getters/isPickerShown.js');
+
+var _reactorGettersIsPickerShownJs2 = _interopRequireDefault(_reactorGettersIsPickerShownJs);
+
 var Day = _react2['default'].createClass({
     displayName: 'Day',
 
@@ -26406,7 +26408,8 @@ var Day = _react2['default'].createClass({
 
     getDataBindings: function getDataBindings() {
         return {
-            selectedDate: _reactorGettersSelectedDateJs2['default']
+            selectedDate: _reactorGettersSelectedDateJs2['default'],
+            isPickerShown: _reactorGettersIsPickerShownJs2['default']
         };
     },
 
@@ -26440,6 +26443,10 @@ var Day = _react2['default'].createClass({
     handleClick: function handleClick(date, e) {
         var newDate = this.getDateFromDay(this.props.currentDate, date);
         _reactorDispatcherJs2['default'].dispatch('UPDATE_SELECTED_DATE', newDate);
+
+        if (this.props.dismissOnSelection) {
+            _reactorDispatcherJs2['default'].dispatch('UPDATE_PICKER_VISIBILITY', false);
+        }
     },
 
     render: function render() {
@@ -26464,7 +26471,7 @@ var Day = _react2['default'].createClass({
 exports['default'] = Day;
 module.exports = exports['default'];
 
-},{"../mixins/DateFormat.js":175,"../mixins/StyleBuilder.js":177,"../reactor/Dispatcher.js":178,"../reactor/getters/selectedDate.js":181,"./Styles":165,"react":157}],164:[function(require,module,exports){
+},{"../mixins/DateFormat.js":175,"../mixins/StyleBuilder.js":177,"../reactor/Dispatcher.js":178,"../reactor/getters/isPickerShown.js":180,"../reactor/getters/selectedDate.js":181,"./Styles":165,"react":157}],164:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:41:28

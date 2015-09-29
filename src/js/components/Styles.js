@@ -2,7 +2,7 @@
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:50:26
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-28 17:26:50
+* @Last Modified time: 2015-09-28 20:58:36
 */
 
 import GENERAL from './Styles/General.js';
@@ -12,8 +12,7 @@ import TITLE from './Styles/Title.js';
 import CONTROLS from './Styles/Controls.js';
 import ICON from './Styles/Icon.js';
 import CALENDAR from './Styles/Calendar.js';
-
-
+import DAY from './Styles/Day.js';
 
 const Styles = {
     GENERAL: GENERAL,
@@ -22,7 +21,8 @@ const Styles = {
     TITLE: TITLE,
     CONTROLS: CONTROLS,
     ICON: ICON,
-    CALENDAR: CALENDAR
+    CALENDAR: CALENDAR,
+    DAY: DAY
 };
 
 export default Styles;

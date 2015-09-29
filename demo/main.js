@@ -26082,7 +26082,7 @@ var DatePicker = _react2['default'].createClass({
 exports['default'] = DatePicker;
 module.exports = exports['default'];
 
-},{"./components/Trigger.jsx":172,"./reactor/Dispatcher.js":176,"react":157}],160:[function(require,module,exports){
+},{"./components/Trigger.jsx":174,"./reactor/Dispatcher.js":178,"react":157}],160:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:41:28
@@ -26114,6 +26114,10 @@ var _mixinsDateFormatJs = require('../mixins/DateFormat.js');
 
 var _mixinsDateFormatJs2 = _interopRequireDefault(_mixinsDateFormatJs);
 
+var _DayJsx = require('./Day.jsx');
+
+var _DayJsx2 = _interopRequireDefault(_DayJsx);
+
 var Calendar = _react2['default'].createClass({
     displayName: 'Calendar',
 
@@ -26126,16 +26130,27 @@ var Calendar = _react2['default'].createClass({
                 height: _Styles2['default'].CALENDAR.CONTAINER.HEIGHT,
                 width: _Styles2['default'].CALENDAR.CONTAINER.WIDTH,
                 margin: _Styles2['default'].CALENDAR.CONTAINER.MARGIN,
-                marginTop: _Styles2['default'].CALENDAR.CONTAINER.MARGIN_TOP
+                marginTop: _Styles2['default'].CALENDAR.CONTAINER.MARGIN_TOP,
+                textAlign: _Styles2['default'].CALENDAR.CONTAINER.TEXT_ALIGN
             }
         };
+    },
+
+    getDays: function getDays() {
+        var _this = this;
+
+        var days = this.getDaysFromDate(this.props.currentDate).map(function (day) {
+            return _react2['default'].createElement(_DayJsx2['default'], { data: day, currentDate: _this.props.currentDate });
+        });
+
+        return { days: days };
     },
 
     render: function render() {
         return _react2['default'].createElement(
             'div',
             { style: this.buildStyles('calendarContainerStyle') },
-            'Hi'
+            this.getDays()
         );
     }
 });
@@ -26143,7 +26158,7 @@ var Calendar = _react2['default'].createClass({
 exports['default'] = Calendar;
 module.exports = exports['default'];
 
-},{"../mixins/DateFormat.js":173,"../mixins/StyleBuilder.js":175,"./Styles":164,"react":157}],161:[function(require,module,exports){
+},{"../mixins/DateFormat.js":175,"../mixins/StyleBuilder.js":177,"./Day.jsx":163,"./Styles":165,"react":157}],161:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:41:28
@@ -26240,7 +26255,7 @@ var Container = _react2['default'].createClass({
 exports['default'] = Container;
 module.exports = exports['default'];
 
-},{"../mixins/DateFormat.js":173,"../mixins/Dismisser.js":174,"../mixins/StyleBuilder.js":175,"./Calendar.jsx":160,"./Controls.js":162,"./Styles":164,"react":157}],162:[function(require,module,exports){
+},{"../mixins/DateFormat.js":175,"../mixins/Dismisser.js":176,"../mixins/StyleBuilder.js":177,"./Calendar.jsx":160,"./Controls.js":162,"./Styles":165,"react":157}],162:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:29:41
@@ -26344,7 +26359,112 @@ var Controls = _react2['default'].createClass({
 exports['default'] = Controls;
 module.exports = exports['default'];
 
-},{"../mixins/DateFormat.js":173,"../mixins/StyleBuilder.js":175,"../reactor/Dispatcher.js":176,"../reactor/getters/currentDate.js":177,"./Icon.jsx":163,"./Styles":164,"react":157}],163:[function(require,module,exports){
+},{"../mixins/DateFormat.js":175,"../mixins/StyleBuilder.js":177,"../reactor/Dispatcher.js":178,"../reactor/getters/currentDate.js":179,"./Icon.jsx":164,"./Styles":165,"react":157}],163:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-26 16:41:28
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-26 16:53:04
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactorDispatcherJs = require('../reactor/Dispatcher.js');
+
+var _reactorDispatcherJs2 = _interopRequireDefault(_reactorDispatcherJs);
+
+var _Styles = require('./Styles');
+
+var _Styles2 = _interopRequireDefault(_Styles);
+
+var _mixinsDateFormatJs = require('../mixins/DateFormat.js');
+
+var _mixinsDateFormatJs2 = _interopRequireDefault(_mixinsDateFormatJs);
+
+var _mixinsStyleBuilderJs = require('../mixins/StyleBuilder.js');
+
+var _mixinsStyleBuilderJs2 = _interopRequireDefault(_mixinsStyleBuilderJs);
+
+var _reactorGettersSelectedDateJs = require('../reactor/getters/selectedDate.js');
+
+var _reactorGettersSelectedDateJs2 = _interopRequireDefault(_reactorGettersSelectedDateJs);
+
+var Day = _react2['default'].createClass({
+    displayName: 'Day',
+
+    mixins: [_mixinsStyleBuilderJs2['default'], _mixinsDateFormatJs2['default']],
+
+    getDataBindings: function getDataBindings() {
+        return {
+            selectedDate: _reactorGettersSelectedDateJs2['default']
+        };
+    },
+
+    getDefaultProps: function getDefaultProps() {
+        return {
+            containerStyle: {
+                fontFamily: _Styles2['default'].GENERAL.FONT_FAMILY,
+                display: _Styles2['default'].DAY.CONTAINER.DISPLAY,
+                width: _Styles2['default'].DAY.CONTAINER.WIDTH,
+                height: _Styles2['default'].DAY.CONTAINER.HEIGHT,
+                border: _Styles2['default'].DAY.CONTAINER.BORDER,
+                margin: _Styles2['default'].DAY.CONTAINER.MARGIN,
+                verticalAlign: _Styles2['default'].DAY.CONTAINER.VERTICAL_ALIGN,
+                position: _Styles2['default'].DAY.CONTAINER.POSITION,
+                textAlign: _Styles2['default'].DAY.CONTAINER.TEXT_ALIGN
+            },
+            dateStyle: {
+                fontFamily: _Styles2['default'].GENERAL.FONT_FAMILY,
+                position: _Styles2['default'].DAY.TITLE.POSITION,
+                fontSize: _Styles2['default'].DAY.DATE_TITLE.FONT_SIZE,
+                top: _Styles2['default'].DAY.DATE_TITLE.TOP,
+                left: _Styles2['default'].DAY.DATE_TITLE.LEFT
+            },
+            dayStyle: {
+                fontFamily: _Styles2['default'].GENERAL.FONT_FAMILY,
+                fontSize: _Styles2['default'].DAY.DAY_TITLE.FONT_SIZE
+            }
+        };
+    },
+
+    handleClick: function handleClick(date, e) {
+        var newDate = this.getDateFromDay(this.props.currentDate, date);
+        _reactorDispatcherJs2['default'].dispatch('UPDATE_SELECTED_DATE', newDate);
+    },
+
+    render: function render() {
+        return _react2['default'].createElement(
+            'div',
+            { style: this.buildStyles('containerStyle'),
+                onClick: this.handleClick.bind(this, this.props.data.date) },
+            _react2['default'].createElement(
+                'h4',
+                { style: this.buildStyles('dateStyle') },
+                this.props.data.date
+            ),
+            _react2['default'].createElement(
+                'h5',
+                { style: this.buildStyles('dayStyle') },
+                this.props.data.day
+            )
+        );
+    }
+});
+
+exports['default'] = Day;
+module.exports = exports['default'];
+
+},{"../mixins/DateFormat.js":175,"../mixins/StyleBuilder.js":177,"../reactor/Dispatcher.js":178,"../reactor/getters/selectedDate.js":181,"./Styles":165,"react":157}],164:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:41:28
@@ -26402,12 +26522,12 @@ var Icon = _react2['default'].createClass({
 exports['default'] = Icon;
 module.exports = exports['default'];
 
-},{"../mixins/StyleBuilder.js":175,"./Styles":164,"react":157}],164:[function(require,module,exports){
+},{"../mixins/StyleBuilder.js":177,"./Styles":165,"react":157}],165:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:50:26
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-28 17:26:50
+* @Last Modified time: 2015-09-28 20:58:36
 */
 
 'use strict';
@@ -26446,6 +26566,10 @@ var _StylesCalendarJs = require('./Styles/Calendar.js');
 
 var _StylesCalendarJs2 = _interopRequireDefault(_StylesCalendarJs);
 
+var _StylesDayJs = require('./Styles/Day.js');
+
+var _StylesDayJs2 = _interopRequireDefault(_StylesDayJs);
+
 var Styles = {
     GENERAL: _StylesGeneralJs2['default'],
     INPUT: _StylesInputJs2['default'],
@@ -26453,18 +26577,19 @@ var Styles = {
     TITLE: _StylesTitleJs2['default'],
     CONTROLS: _StylesControlsJs2['default'],
     ICON: _StylesIconJs2['default'],
-    CALENDAR: _StylesCalendarJs2['default']
+    CALENDAR: _StylesCalendarJs2['default'],
+    DAY: _StylesDayJs2['default']
 };
 
 exports['default'] = Styles;
 module.exports = exports['default'];
 
-},{"./Styles/Calendar.js":165,"./Styles/Container.js":166,"./Styles/Controls.js":167,"./Styles/General.js":168,"./Styles/Icon.js":169,"./Styles/Input.js":170,"./Styles/Title.js":171}],165:[function(require,module,exports){
+},{"./Styles/Calendar.js":166,"./Styles/Container.js":167,"./Styles/Controls.js":168,"./Styles/Day.js":169,"./Styles/General.js":170,"./Styles/Icon.js":171,"./Styles/Input.js":172,"./Styles/Title.js":173}],166:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-28 17:26:14
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-28 17:40:02
+* @Last Modified time: 2015-09-28 21:19:52
 */
 
 'use strict';
@@ -26474,24 +26599,24 @@ Object.defineProperty(exports, '__esModule', {
 });
 var CALENDAR = {
     CONTAINER: {
-
         BORDER: '1px solid black',
         HEIGHT: '70%',
         WIDTH: '70%',
         MARGIN: '0px auto',
-        MARGIN_TOP: '20px'
+        MARGIN_TOP: '20px',
+        TEXT_ALIGN: 'justify'
     }
 };
 
 exports['default'] = CALENDAR;
 module.exports = exports['default'];
 
-},{}],166:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:38:44
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-27 20:39:51
+* @Last Modified time: 2015-09-28 21:07:49
 */
 
 'use strict';
@@ -26511,7 +26636,7 @@ var CONTAINER = {
 exports['default'] = CONTAINER;
 module.exports = exports['default'];
 
-},{}],167:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:42:17
@@ -26543,7 +26668,47 @@ var CONTROLS = {
 exports['default'] = CONTROLS;
 module.exports = exports['default'];
 
-},{}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
+/* 
+* @Author: ben_cripps
+* @Date:   2015-09-28 20:58:03
+* @Last Modified by:   ben_cripps
+* @Last Modified time: 2015-09-28 21:26:12
+*/
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+var DAY = {
+    CONTAINER: {
+        DISPLAY: 'inline-block',
+        WIDTH: '40px',
+        HEIGHT: '40px',
+        BORDER: '1px solid black',
+        MARGIN: '2px',
+        VERTICAL_ALIGN: 'top',
+        TEXT_ALIGN: 'center',
+        POSITION: 'relative'
+    },
+    TITLE: {
+        POSITION: 'absolute'
+    },
+    DATE_TITLE: {
+        FONT_SIZE: '11px',
+        TOP: '-15px',
+        LEFT: '3px'
+    },
+    DAY_TITLE: {
+        FONT_SIZE: '14px'
+    }
+};
+
+exports['default'] = DAY;
+module.exports = exports['default'];
+
+},{}],170:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:36:05
@@ -26564,7 +26729,7 @@ var GENERAL = {
 exports['default'] = GENERAL;
 module.exports = exports['default'];
 
-},{}],169:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-28 11:48:27
@@ -26588,7 +26753,7 @@ var ICON = {
 exports['default'] = ICON;
 module.exports = exports['default'];
 
-},{}],170:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:37:46
@@ -26611,7 +26776,7 @@ var INPUT = {
 exports['default'] = INPUT;
 module.exports = exports['default'];
 
-},{}],171:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:40:08
@@ -26631,7 +26796,7 @@ var TITLE = {
 exports['default'] = TITLE;
 module.exports = exports['default'];
 
-},{}],172:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:41:28
@@ -26742,12 +26907,12 @@ var Trigger = _react2['default'].createClass({
 exports['default'] = Trigger;
 module.exports = exports['default'];
 
-},{"../mixins/Dismisser.js":174,"../mixins/StyleBuilder.js":175,"../reactor/Dispatcher.js":176,"../reactor/getters/currentDate.js":177,"../reactor/getters/isPickerShown.js":178,"../reactor/getters/selectedDate.js":179,"./Container.jsx":161,"./Styles":164,"react":157}],173:[function(require,module,exports){
+},{"../mixins/Dismisser.js":176,"../mixins/StyleBuilder.js":177,"../reactor/Dispatcher.js":178,"../reactor/getters/currentDate.js":179,"../reactor/getters/isPickerShown.js":180,"../reactor/getters/selectedDate.js":181,"./Container.jsx":161,"./Styles":165,"react":157}],175:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:06:46
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-28 16:44:15
+* @Last Modified time: 2015-09-28 21:44:36
 */
 
 'use strict';
@@ -26755,20 +26920,9 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
-var Months = {
-    0: 'January',
-    1: 'February',
-    2: 'March',
-    3: 'April',
-    4: 'May',
-    5: 'June',
-    6: 'July',
-    7: 'August',
-    8: 'September',
-    9: 'October',
-    10: 'November',
-    11: 'December'
-};
+var Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+var Days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'];
 
 var DateFormat = {
 
@@ -26782,6 +26936,33 @@ var DateFormat = {
         return d.getFullYear();
     },
 
+    getDaysFromDate: function getDaysFromDate(date) {
+        var d = this.getDate(date);
+        var numberOfDays = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+        var firstDay = new Date(d.getFullYear(), d.getMonth(), 1).getDay();
+        var monthObj = DateFormat.buildMonthObject(numberOfDays, firstDay);
+
+        return monthObj;
+    },
+
+    getDayOfWeek: function getDayOfWeek(index) {
+        return Days[index];
+    },
+
+    buildMonthObject: function buildMonthObject(numOfDays, startIndex) {
+        var dayIndex = startIndex;
+        var monthObj = Array.from(new Array(numOfDays), function (x, i) {
+            dayIndex = dayIndex <= 6 ? dayIndex : 0;
+            dayIndex++;
+            return {
+                date: i + 1,
+                day: DateFormat.getDayOfWeek(dayIndex - 1)
+            };
+        });
+
+        return monthObj;
+    },
+
     advanceMonth: function advanceMonth(date) {
         var d = this.getDate(date);
 
@@ -26793,6 +26974,11 @@ var DateFormat = {
         return new Date(d).setMonth(d.getMonth() + 1);
     },
 
+    getDateFromDay: function getDateFromDay(date, dayIndex) {
+        var d = this.getDate(date);
+        return d.setDate(dayIndex);
+    },
+
     getDate: function getDate(date) {
         return new Date(date);
     }
@@ -26802,7 +26988,7 @@ var DateFormat = {
 exports['default'] = DateFormat;
 module.exports = exports['default'];
 
-},{}],174:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 11:29:49
@@ -26834,7 +27020,7 @@ var Dismisser = {
 exports["default"] = Dismisser;
 module.exports = exports["default"];
 
-},{}],175:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-26 16:55:50
@@ -26858,7 +27044,7 @@ var StyleBuilder = {
 exports["default"] = StyleBuilder;
 module.exports = exports["default"];
 
-},{}],176:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 13:47:14
@@ -26899,7 +27085,7 @@ reactor.registerStores({
 exports['default'] = reactor;
 module.exports = exports['default'];
 
-},{"./stores/currentDate.js":180,"./stores/isPickerShown.js":181,"./stores/selectedDate.js":182,"nuclear-js":2}],177:[function(require,module,exports){
+},{"./stores/currentDate.js":182,"./stores/isPickerShown.js":183,"./stores/selectedDate.js":184,"nuclear-js":2}],179:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 19:27:27
@@ -26919,7 +27105,7 @@ var currentDateGetter = [['currentDate'], function (currentDate) {
 exports['default'] = currentDateGetter;
 module.exports = exports['default'];
 
-},{}],178:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 19:19:32
@@ -26939,7 +27125,7 @@ var isPickerShownGetter = [['isPickerShown'], function (isPickerShown) {
 exports['default'] = isPickerShownGetter;
 module.exports = exports['default'];
 
-},{}],179:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-28 16:37:56
@@ -26959,7 +27145,7 @@ var selectedDateGetter = [['selectedDate'], function (selectedDate) {
 exports['default'] = selectedDateGetter;
 module.exports = exports['default'];
 
-},{}],180:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 19:26:39
@@ -26993,7 +27179,7 @@ var currentDateStore = (0, _nuclearJs.Store)({
 exports['default'] = currentDateStore;
 module.exports = exports['default'];
 
-},{"nuclear-js":2}],181:[function(require,module,exports){
+},{"nuclear-js":2}],183:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 19:20:26
@@ -27026,7 +27212,7 @@ var isPickerShownStore = (0, _nuclearJs.Store)({
 exports['default'] = isPickerShownStore;
 module.exports = exports['default'];
 
-},{"nuclear-js":2}],182:[function(require,module,exports){
+},{"nuclear-js":2}],184:[function(require,module,exports){
 /* 
 * @Author: ben_cripps
 * @Date:   2015-09-27 19:26:39

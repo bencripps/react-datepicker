@@ -9,6 +9,7 @@ import React from 'react';
 import Styles from './Styles';
 import StyleBuilder from '../mixins/StyleBuilder.js';
 import DateFormat from '../mixins/DateFormat.js';
+import Day from './Day.jsx';
 
 const Calendar = React.createClass({
 
@@ -22,14 +23,23 @@ const Calendar = React.createClass({
                 width: Styles.CALENDAR.CONTAINER.WIDTH,
                 margin: Styles.CALENDAR.CONTAINER.MARGIN,
                 marginTop: Styles.CALENDAR.CONTAINER.MARGIN_TOP,
+                textAlign: Styles.CALENDAR.CONTAINER.TEXT_ALIGN
             }
         };
+    },
+
+    getDays() {
+        var days = this.getDaysFromDate(this.props.currentDate).map((day) => <Day data={day} currentDate={this.props.currentDate} />);
+
+        return(
+            {days}
+        );
     },
 
     render() {
         return (
             <div style={this.buildStyles('calendarContainerStyle')}>
-                Hi
+                {this.getDays()}
             </div>
         );
     }

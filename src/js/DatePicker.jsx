@@ -8,12 +8,7 @@
 import React from 'react';
 import Trigger from './components/Trigger.jsx';
 import reactor from './reactor/Dispatcher.js';
-
-const DISMISS_ON_SELECTION = true;
-const PREFIX = 'react-datepicker-';
-const TRIGGER_CLASSNAME = PREFIX + 'trigger';
-const CONTAINER_CLASSNAME = PREFIX + 'container';
-const AFTER_SELECTION = (date) => {};
+import DEFAULT_PROPS from './components/config/defaultProps.js';
 
 const DatePicker = React.createClass({
 
@@ -25,12 +20,7 @@ const DatePicker = React.createClass({
     },
 
     getDefaultProps() {
-        return {
-            dismissOnSelection: DISMISS_ON_SELECTION,
-            triggerClassname: TRIGGER_CLASSNAME,
-            containerClassname: CONTAINER_CLASSNAME,
-            afterSelection: AFTER_SELECTION
-        };
+        return DEFAULT_PROPS
     },
 
     render() {

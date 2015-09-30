@@ -6,12 +6,12 @@
 */
 
 import React from 'react';
+import Radium from 'radium';
 import Styles from './Styles';
-import StyleBuilder from '../mixins/StyleBuilder.js';
 
 const Icon = React.createClass({
 
-    mixins: [StyleBuilder],
+    mixins: [],
 
     getDefaultProps() {
         return {
@@ -32,9 +32,9 @@ const Icon = React.createClass({
 
     render() {
         return (  
-            <i style={this.buildStyles('iconStyle')} className={this.types[this.props.type]}></i>
+            <i style={[this.props.iconStyle]} className={this.types[this.props.type]}></i>
         );
     }
 });
 
-export default Icon;
+export default Radium(Icon);

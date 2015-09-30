@@ -6,16 +6,16 @@
 */
 
 import React from 'react';
+import Radium from 'radium';
 import reactor from '../reactor/Dispatcher.js';
 import Styles from './Styles';
 import DateFormat from '../mixins/DateFormat.js';
-import StyleBuilder from '../mixins/StyleBuilder.js';
 import selectedDateGetter from '../reactor/getters/selectedDate.js';
 import isPickerShownGetter from '../reactor/getters/isPickerShown.js';
 
 const Day = React.createClass({
 
-    mixins: [StyleBuilder, DateFormat],
+    mixins: [DateFormat],
 
     getDataBindings() {
         return {
@@ -36,6 +36,14 @@ const Day = React.createClass({
                 verticalAlign: Styles.DAY.CONTAINER.VERTICAL_ALIGN,
                 position: Styles.DAY.CONTAINER.POSITION,
                 textAlign: Styles.DAY.CONTAINER.TEXT_ALIGN,
+                transform: Styles.DAY.CONTAINER.TRANSFORM,
+                transitionTimingFunction: Styles.GENERAL.TRANSITION_TIMING_FUNCTION,
+                transitionDuration: Styles.GENERAL.TRANSITION_DURATION,
+                transitionProperty: Styles.DAY.CONTAINER.TRANSITION_PROPERTY,
+                ':hover': {
+                    color: Styles.DAY.CONTAINER.HOVER_COLOR,
+                    transform: Styles.DAY.CONTAINER.HOVER_TRANSFORM
+                }
             },
             dateStyle: {
                 fontFamily: Styles.GENERAL.FONT_FAMILY,
@@ -55,6 +63,10 @@ const Day = React.createClass({
         var newDate = this.getDateFromDay(this.props.currentDate, date);
         reactor.dispatch('UPDATE_SELECTED_DATE', newDate);
 
+        if (this.props.afterSelection) {
+            this.props.afterSelection(new Date(newDate));
+        }
+
         if (this.props.dismissOnSelection) {
             reactor.dispatch('UPDATE_PICKER_VISIBILITY', false);
         }
@@ -62,13 +74,13 @@ const Day = React.createClass({
 
     render() {
         return (  
-            <div style={this.buildStyles('containerStyle')} 
+            <div style={[this.props.containerStyle]} 
                 onClick={this.handleClick.bind(this, this.props.data.date)}>
-                <h4 style={this.buildStyles('dateStyle')}>{this.props.data.date}</h4>
-                <h5 style={this.buildStyles('dayStyle')}>{this.props.data.day}</h5>
+                <h4 style={[this.props.dateStyle]}>{this.props.data.date}</h4>
+                <h5 style={[this.props.dayStyle]}>{this.props.data.day}</h5>
             </div>
         );
     }
 });
 
-export default Day;
+export default Radium(Day);

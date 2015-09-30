@@ -6,8 +6,8 @@
 */
 
 import React from 'react';
+import Radium from 'radium';
 import Styles from './Styles';
-import StyleBuilder from '../mixins/StyleBuilder.js';
 import Dismisser from '../mixins/Dismisser.js';
 import DateFormat from '../mixins/DateFormat.js';
 import Controls from './Controls.js';
@@ -15,7 +15,7 @@ import Calendar from './Calendar.jsx';
 
 const Container = React.createClass({
 
-    mixins: [StyleBuilder, Dismisser, DateFormat],
+    mixins: [Dismisser, DateFormat],
 
     getDefaultProps() {
         return {
@@ -27,6 +27,7 @@ const Container = React.createClass({
                 left: Styles.CONTAINER.LEFT,
                 right: Styles.CONTAINER.RIGHT,
                 margin: Styles.CONTAINER.MARGIN,
+                boxShadow: Styles.GENERAL.BOX_SHADOW
             },
             titleStyle: {
                 fontFamily: Styles.GENERAL.FONT_FAMILY,
@@ -50,8 +51,8 @@ const Container = React.createClass({
     getContainer() {
         
         return (
-            <div style={this.buildStyles('containerStyle')} className={this.props.containerClassname}>
-                <h2 style={this.buildStyles('titleStyle')}>
+            <div style={[this.props.containerStyle]} className={this.props.containerClassname}>
+                <h2 style={[this.props.titleStyle]}>
                     {this.getTitleTemplate()}
                 </h2>
                 <Controls {...this.props} />
@@ -62,4 +63,4 @@ const Container = React.createClass({
 
 });
 
-export default Container;
+export default Radium(Container);

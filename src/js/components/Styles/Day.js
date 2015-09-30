@@ -2,7 +2,7 @@
 * @Author: ben_cripps
 * @Date:   2015-09-28 20:58:03
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-28 21:26:12
+* @Last Modified time: 2015-09-29 20:47:50
 */
 
 const DAY = {
@@ -14,7 +14,10 @@ const DAY = {
         MARGIN: '2px',
         VERTICAL_ALIGN: 'top',
         TEXT_ALIGN: 'center',
-        POSITION: 'relative'
+        POSITION: 'relative',
+        TRANSFORM: 'scale(1.00)',
+        HOVER_TRANSFORM: 'scale(1.10)',
+        TRANSITION_PROPERTY: 'transform'
     },
     TITLE: {
         POSITION: 'absolute'

@@ -13,6 +13,7 @@ const DISMISS_ON_SELECTION = true;
 const PREFIX = 'react-datepicker-';
 const TRIGGER_CLASSNAME = PREFIX + 'trigger';
 const CONTAINER_CLASSNAME = PREFIX + 'container';
+const AFTER_SELECTION = (date) => {};
 
 const DatePicker = React.createClass({
 
@@ -27,7 +28,8 @@ const DatePicker = React.createClass({
         return {
             dismissOnSelection: DISMISS_ON_SELECTION,
             triggerClassname: TRIGGER_CLASSNAME,
-            containerClassname: CONTAINER_CLASSNAME
+            containerClassname: CONTAINER_CLASSNAME,
+            afterSelection: AFTER_SELECTION
         };
     },
 

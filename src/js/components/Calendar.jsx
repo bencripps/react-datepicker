@@ -6,19 +6,18 @@
 */
 
 import React from 'react';
+import Radium from 'radium';
 import Styles from './Styles';
-import StyleBuilder from '../mixins/StyleBuilder.js';
 import DateFormat from '../mixins/DateFormat.js';
 import Day from './Day.jsx';
 
 const Calendar = React.createClass({
 
-    mixins: [StyleBuilder, DateFormat],
+    mixins: [DateFormat],
 
     getDefaultProps() {
         return {
             calendarContainerStyle: {
-                border: Styles.CALENDAR.CONTAINER.BORDER,
                 height: Styles.CALENDAR.CONTAINER.HEIGHT,
                 width: Styles.CALENDAR.CONTAINER.WIDTH,
                 margin: Styles.CALENDAR.CONTAINER.MARGIN,
@@ -29,16 +28,19 @@ const Calendar = React.createClass({
     },
 
     getDays() {
-        return this.getDaysFromDate(this.props.currentDate).map((day) => <Day data={day} currentDate={this.props.currentDate} dismissOnSelection={this.props.dismissOnSelection} />);
+        return this.getDaysFromDate(this.props.currentDate).map((day) => <Day   data={day} 
+                                                                                currentDate={this.props.currentDate} 
+                                                                                dismissOnSelection={this.props.dismissOnSelection} 
+                                                                                afterSelection={this.props.afterSelection}/>);
     },
 
     render() {
         return (
-            <div style={this.buildStyles('calendarContainerStyle')}>
+            <div style={[this.props.calendarContainerStyle]}>
                 {this.getDays()}
             </div>
         );
     }
 });
 
-export default Calendar;
+export default Radium(Calendar);

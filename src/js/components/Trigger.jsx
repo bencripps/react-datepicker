@@ -6,9 +6,9 @@
 */
 
 import React from 'react';
+import Radium from 'radium';
 import Styles from './Styles';
 import Container from './Container.jsx';
-import StyleBuilder from '../mixins/StyleBuilder.js';
 import Dismisser from '../mixins/Dismisser.js';
 import reactor from '../reactor/Dispatcher.js';
 import isPickerShownGetter from '../reactor/getters/isPickerShown.js';
@@ -17,7 +17,7 @@ import currentDateGetter from '../reactor/getters/currentDate.js';
 
 const Trigger = React.createClass({
 
-    mixins: [StyleBuilder, Dismisser, reactor.ReactMixin],
+    mixins: [Dismisser, reactor.ReactMixin],
 
     getDataBindings() {
         return {
@@ -58,7 +58,7 @@ const Trigger = React.createClass({
                     className={this.props.triggerClassname} 
                     type='text' 
                     value={this.state.selectedDate} 
-                    style={this.buildStyles('triggerStyle')} 
+                    style={[this.props.triggerStyle]} 
                     onClick={this.resetContainer} />
                 <Container {...this.state} {...this.props}/>
             </div>
@@ -66,4 +66,4 @@ const Trigger = React.createClass({
     }
 });
 
-export default Trigger;
+export default Radium(Trigger);

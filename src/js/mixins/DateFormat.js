@@ -2,7 +2,7 @@
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:06:46
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-28 21:44:36
+* @Last Modified time: 2015-09-29 21:27:39
 */
 
 const Months = [
@@ -71,13 +71,12 @@ const DateFormat = {
 
     advanceMonth(date) {
         var d = this.getDate(date);
-        
         return new Date(d).setMonth(d.getMonth() + 1);
     },
 
     decrementMonth(date) {
         var d = this.getDate(date);
-        return new Date(d).setMonth(d.getMonth() + 1);
+        return new Date(d).setMonth(d.getMonth() - 1);
     },
 
     getDateFromDay(date, dayIndex) {

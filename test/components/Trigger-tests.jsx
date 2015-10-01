@@ -4,9 +4,10 @@
 * @Last Modified by:   ben_cripps
 * @Last Modified time: 2015-09-30 09:51:25
 */
+
 import React from 'react';
-import Trigger from '../src/js/components/Trigger.jsx';
-import defaultProps from '../src/js/components/config/defaultProps.js';
+import Trigger from '../../src/js/components/Trigger.jsx';
+import defaultProps from '../../src/js/components/config/defaultProps.js';
 
 const comp = <Trigger  {...defaultProps} />
 

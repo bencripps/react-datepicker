@@ -2,10 +2,10 @@
 * @Author: ben_cripps
 * @Date:   2015-09-29 22:06:27
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-30 09:08:57
+* @Last Modified time: 2015-09-30 21:03:15
 */
 
-import DateFormat from '../src/js/mixins/DateFormat.js';
+import DateFormat from '../../src/js/mixins/DateFormat.js';
 
 const staticDate = 1443582772705;
 

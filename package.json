@@ -1,7 +1,7 @@
 {
   "name": "react_datepicker",
   "version": "1.0.0",
-  "description": "a native react datepicker built with jsx",
+  "description": "a flux react datepicker built with jsx and nuclear",
   "main": "index.js",
   "scripts": {
     "build-js": "browserify demo/built/runner.jsx -t babelify --outfile demo/main.js",

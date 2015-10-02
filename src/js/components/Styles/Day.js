@@ -2,7 +2,7 @@
 * @Author: ben_cripps
 * @Date:   2015-09-28 20:58:03
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-29 20:47:50
+* @Last Modified time: 2015-10-01 20:31:53
 */
 
 const DAY = {
@@ -29,6 +29,9 @@ const DAY = {
     },
     DAY_TITLE: {
         FONT_SIZE: '14px'
+    },
+    ACTIVE_STYLE: {
+        BACKGROUND_COLOR: '#C2E0FF'
     }
 };
 

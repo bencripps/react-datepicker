@@ -27807,6 +27807,8 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = require('react');
@@ -27850,10 +27852,7 @@ var Calendar = _react2['default'].createClass({
         var _this = this;
 
         return this.getDaysFromDate(this.props.currentDate).map(function (day) {
-            return _react2['default'].createElement(_DayJsx2['default'], { data: day,
-                currentDate: _this.props.currentDate,
-                dismissOnSelection: _this.props.dismissOnSelection,
-                afterSelection: _this.props.afterSelection });
+            return _react2['default'].createElement(_DayJsx2['default'], _extends({ data: day }, _this.props));
         });
     },
 
@@ -28143,7 +28142,7 @@ var Day = _react2['default'].createClass({
 
     getDefaultProps: function getDefaultProps() {
         return {
-            containerStyle: {
+            dayContainerStyle: {
                 fontFamily: _Styles2['default'].GENERAL.FONT_FAMILY,
                 display: _Styles2['default'].DAY.CONTAINER.DISPLAY,
                 width: _Styles2['default'].DAY.CONTAINER.WIDTH,
@@ -28158,7 +28157,6 @@ var Day = _react2['default'].createClass({
                 transitionDuration: _Styles2['default'].GENERAL.TRANSITION_DURATION,
                 transitionProperty: _Styles2['default'].DAY.CONTAINER.TRANSITION_PROPERTY,
                 ':hover': {
-                    color: _Styles2['default'].DAY.CONTAINER.HOVER_COLOR,
                     transform: _Styles2['default'].DAY.CONTAINER.HOVER_TRANSFORM
                 }
             },
@@ -28172,6 +28170,9 @@ var Day = _react2['default'].createClass({
             dayStyle: {
                 fontFamily: _Styles2['default'].GENERAL.FONT_FAMILY,
                 fontSize: _Styles2['default'].DAY.DAY_TITLE.FONT_SIZE
+            },
+            activeStyle: {
+                backgroundColor: _Styles2['default'].DAY.ACTIVE_STYLE.BACKGROUND_COLOR
             }
         };
     },
@@ -28189,10 +28190,17 @@ var Day = _react2['default'].createClass({
         }
     },
 
+    isActiveDate: function isActiveDate(dateObj, currentDate) {
+        return this.isSameDate(dateObj.fullDate, new Date(currentDate));
+    },
+
     render: function render() {
+
+        var activeStyles = this.isActiveDate(this.props.data, this.props.selectedDate) ? this.props.activeStyle : [];
+
         return _react2['default'].createElement(
             'div',
-            { style: [this.props.containerStyle],
+            { style: [this.props.dayContainerStyle, activeStyles],
                 onClick: this.handleClick.bind(this, this.props.data.date) },
             _react2['default'].createElement(
                 'h4',
@@ -28422,7 +28430,7 @@ module.exports = exports['default'];
 * @Author: ben_cripps
 * @Date:   2015-09-28 20:58:03
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-29 20:47:50
+* @Last Modified time: 2015-10-01 20:31:53
 */
 
 'use strict';
@@ -28454,6 +28462,9 @@ var DAY = {
     },
     DAY_TITLE: {
         FONT_SIZE: '14px'
+    },
+    ACTIVE_STYLE: {
+        BACKGROUND_COLOR: '#C2E0FF'
     }
 };
 
@@ -28692,7 +28703,7 @@ module.exports = exports['default'];
 * @Author: ben_cripps
 * @Date:   2015-09-27 20:06:46
 * @Last Modified by:   ben_cripps
-* @Last Modified time: 2015-09-29 21:27:39
+* @Last Modified time: 2015-10-01 20:38:22
 */
 
 'use strict';
@@ -28720,7 +28731,7 @@ var DateFormat = {
         var d = this.getDate(date);
         var numberOfDays = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
         var firstDay = new Date(d.getFullYear(), d.getMonth(), 1).getDay();
-        var monthObj = DateFormat.buildMonthObject(numberOfDays, firstDay);
+        var monthObj = DateFormat.buildMonthObject(numberOfDays, firstDay, d.getMonth(), d.getFullYear());
 
         return monthObj;
     },
@@ -28729,14 +28740,15 @@ var DateFormat = {
         return Days[index];
     },
 
-    buildMonthObject: function buildMonthObject(numOfDays, startIndex) {
+    buildMonthObject: function buildMonthObject(numOfDays, startIndex, month, year) {
         var dayIndex = startIndex;
         var monthObj = Array.from(new Array(numOfDays), function (x, i) {
             dayIndex = dayIndex <= 6 ? dayIndex : 0;
             dayIndex++;
             return {
                 date: i + 1,
-                day: DateFormat.getDayOfWeek(dayIndex - 1)
+                day: DateFormat.getDayOfWeek(dayIndex - 1),
+                fullDate: new Date(year, month, i + 1)
             };
         });
 
@@ -28756,6 +28768,10 @@ var DateFormat = {
     getDateFromDay: function getDateFromDay(date, dayIndex) {
         var d = this.getDate(date);
         return d.setDate(dayIndex);
+    },
+
+    isSameDate: function isSameDate(oldDate, currentDate) {
+        return String(oldDate) === String(currentDate);
     },
 
     getDate: function getDate(date) {

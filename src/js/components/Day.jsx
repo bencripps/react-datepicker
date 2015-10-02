@@ -26,7 +26,7 @@ const Day = React.createClass({
 
     getDefaultProps() {
         return {
-            containerStyle: {
+            dayContainerStyle: {
                 fontFamily: Styles.GENERAL.FONT_FAMILY,
                 display: Styles.DAY.CONTAINER.DISPLAY,
                 width: Styles.DAY.CONTAINER.WIDTH,
@@ -41,7 +41,6 @@ const Day = React.createClass({
                 transitionDuration: Styles.GENERAL.TRANSITION_DURATION,
                 transitionProperty: Styles.DAY.CONTAINER.TRANSITION_PROPERTY,
                 ':hover': {
-                    color: Styles.DAY.CONTAINER.HOVER_COLOR,
                     transform: Styles.DAY.CONTAINER.HOVER_TRANSFORM
                 }
             },
@@ -55,6 +54,9 @@ const Day = React.createClass({
             dayStyle: {
                 fontFamily: Styles.GENERAL.FONT_FAMILY,
                 fontSize: Styles.DAY.DAY_TITLE.FONT_SIZE
+            },
+            activeStyle: {
+                backgroundColor: Styles.DAY.ACTIVE_STYLE.BACKGROUND_COLOR,
             }
         };
     },
@@ -70,11 +72,19 @@ const Day = React.createClass({
         if (this.props.dismissOnSelection) {
             reactor.dispatch('UPDATE_PICKER_VISIBILITY', false);
         }
+
+    },
+
+    isActiveDate(dateObj, currentDate) {
+        return this.isSameDate(dateObj.fullDate, new Date(currentDate));
     },
 
     render() {
+        
+        var activeStyles = this.isActiveDate(this.props.data, this.props.selectedDate) ? this.props.activeStyle : [];
+
         return (  
-            <div style={[this.props.containerStyle]} 
+            <div style={[this.props.dayContainerStyle, activeStyles]} 
                 onClick={this.handleClick.bind(this, this.props.data.date)}>
                 <h4 style={[this.props.dateStyle]}>{this.props.data.date}</h4>
                 <h5 style={[this.props.dayStyle]}>{this.props.data.day}</h5>
